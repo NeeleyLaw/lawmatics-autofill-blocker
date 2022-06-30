@@ -73,10 +73,7 @@ function makeMatterButtons() {
         for (var i = 1; i < nodes.length; i++) {
             let link = nodes[i].querySelector('*[data-cy="matter-details-link"]').href
             nodes[i].style.cursor = "pointer"
-            nodes[i].addEventListener("click", function (e) {
-                if (e.target !== this) {
-                    return;
-                }
+            nodes[i].addEventListener("dblclick", function (e) {
                 window.location.href = link
             })
         }
