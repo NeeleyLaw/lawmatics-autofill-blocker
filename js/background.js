@@ -34,7 +34,7 @@ function callbackBoi(records) {
 var uid;
 
 function getUserCookie() {
-    chrome.cookies.get({ "url": "https://app.lawmatics.com", "name": "uid" }, function (cookie) {
+    chrome.cookies.get({ "url": "https://app.lawmatics.com", "name": "uid" }, function(cookie) {
         uid = cookie.value;
         console.log(uid)
     });
@@ -73,7 +73,7 @@ function makeMatterButtons() {
         for (var i = 1; i < nodes.length; i++) {
             let link = nodes[i].querySelector('*[data-cy="matter-details-link"]').href
             nodes[i].style.cursor = "pointer"
-            nodes[i].addEventListener("dblclick", function (e) {
+            nodes[i].addEventListener("dblclick", function(e) {
                 window.location.href = link
             })
         }
@@ -81,14 +81,23 @@ function makeMatterButtons() {
 }
 
 setTimeout(() => {
-    document.querySelector('[class*="_1pxMkFFwX3lo_o_1IJVuTD"]').insertAdjacentHTML("beforebegin", headerElement)
+    var parentElement = document.getElementById("topbar")
+    parentElement.insertBefore(headerElement, parentElement.childNodes[1])
 }, 1000)
 
-var headerElement = `<div class="flex items-stretch" style="
+var headerElement = createElementFromHTML(`<div class="flex items-stretch" style="
                         color: #59b6ff;
                         justify-content: center;
                         align-items: center;
                         font-weight: bold;
                         font-size: 13pt;
                         "><a href="http://www.neeleylaw.com">NEELEYLAW</a>
-                        </div>`
+                        </div>`)
+
+function createElementFromHTML(htmlString) {
+    var div = document.createElement('div');
+    div.innerHTML = htmlString.trim();
+
+    // Change this to div.childNodes to support multiple top-level nodes.
+    return div.firstChild;
+}
