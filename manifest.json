@@ -4,11 +4,6 @@
   "manifest_version": 3,
   "description": "Various Lawmatics Tools custom for NeeleyLaw",
   "update_url": "https://raw.githubusercontent.com/aneeley05/lawmatics-autofill-blocker/master/updates.xml",
-  "icons": {
-    "16": "images/logo.png",
-    "48": "images/logo.png",
-    "128": "images/logo.png"
-  },
   "default_locale": "en",
   "content_scripts": [
     {
