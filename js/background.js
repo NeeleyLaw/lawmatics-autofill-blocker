@@ -1,26 +1,60 @@
 /*global chrome*/
+
+admins = ["kenn@neeleylaw.com"]
+
 setInterval(() => {
     var inputs = document.querySelectorAll('[id^="contactAttributes"]')
     for (var i = 0; i < inputs.length; i++) {
         inputs[i].setAttribute("autocomplete", "no-autofill")
     }
     makeMatterButtons();
+
+    // If we are in settings
+    if (window.location.pathname.includes("settings")) {
+        checkAdmin().then((isAdmin) => {
+            if (!isAdmin) {
+                var buttons = document.querySelectorAll("button, a")
+                var forbiddenButtons = Array.from(buttons).filter(element => (element.textContent.includes("Developers") || element.textContent.includes("Pipelines") || element.textContent.includes("Contacts")))
+                forbiddenButtons.forEach(element => {
+                    element.style.display = "none"
+                })
+            }
+        })
+    }
 }, 1000)
 
 document.addEventListener("click", (e) => {
     // Wait for stuff to load in
     setTimeout(() => {
         // if path is /notes or /activities and body exists and mentionsList doesn't exist
-        if((window.location.pathname.includes("notes") || window.location.pathname.includes("activities")) && document.getElementById("body") && document.getElementById("mentionsList") == null) {
+        if ((window.location.pathname.includes("notes") || window.location.pathname.includes("activities")) && document.getElementById("body") && document.getElementById("mentionsList") == null) {
             insertMentionsList();
         }
     }, 50)
+
+    // Double check deleteEnabled is true
+    if (!window.location.href.includes("?del")) {
+        deleteEnabled = false;
+    }
 })
+
+setTimeout(() => {
+    var parentElement = document.getElementById("topbar")
+    parentElement.insertBefore(headerElement, parentElement.childNodes[1])
+
+    // if "?del" is in the URL, enable delete buttons
+    if (window.location.toString().includes("?del")) {
+        deleteEnabled = true
+    }
+}, 1000)
 
 var deleteEnabled = false;
 
 const toggleDeleteEnabled = () => {
     deleteEnabled = !deleteEnabled;
+    if (deleteEnabled) {
+        window.location.href = window.location.href + "?del";
+    }
 }
 
 // Get currently focused element
@@ -32,6 +66,15 @@ function getFocusedNoteBody() {
         return focusedElement;
     }
     return null;
+}
+
+async function checkAdmin() {
+    var uid = await getUserCookie();
+    // url decode
+    uid = decodeURIComponent(uid);
+    if (admins.includes(uid)) {
+        return true;
+    }
 }
 
 // {"name":"KennethNeeley","id":"6595"},{"name":"AmberRay","id":"7839"},{"name":"KarenBentley","id":"7840"},{"name":"CarolineZemp","id":"7841"},{"name":"EmmaNeeley","id":"7843"},{"name":"NickVanVleet","id":"7844"},{"name":"NikkiPadgen","id":"7845"},{"name":"GeoffreyKhotim","id":"7846"},{"name":"RosaCarrera","id":"7848"},{"name":"CaleyPesicka","id":"7849"},{"name":"JusticePierce","id":"7850"},{"name":"JocelynRick","id":"7851"},{"name":"TamaraLang","id":"11714"},{"name":"AngieDaniel","id":"11715"}
@@ -85,7 +128,7 @@ function insertMentionsList() {
     body.insertAdjacentHTML("afterend", mentionsList)
     document.querySelectorAll(".mention").forEach((mention) => {
         mention.addEventListener("click", (e) => {
-            if(!document.getElementById("body").value.includes("@" + e.target.id)) {
+            if (!document.getElementById("body").value.includes("@" + e.target.id)) {
                 document.getElementById("body").value += "@" + e.target.id + " ";
                 e.target.classList.add("included")
             } else {
@@ -115,11 +158,10 @@ function callbackBoi(records) {
 
 var uid;
 
-function getUserCookie() {
-    chrome.cookies.get({ "url": "https://app.lawmatics.com", "name": "uid" }, function(cookie) {
-        uid = cookie.value;
-        console.log(uid)
-    });
+async function getUserCookie() {
+    let cookie = await window.cookieStore.get("uid")
+    uid = cookie.value
+    return uid
 }
 
 var observer = new MutationObserver(callbackBoi);
@@ -156,17 +198,13 @@ function makeMatterButtons() {
         for (var i = 1; i < nodes.length; i++) {
             let link = nodes[i].querySelector('*[data-cy="matter-details-link"]').href
             nodes[i].style.cursor = "pointer"
-            nodes[i].addEventListener("dblclick", function(e) {
+            nodes[i].addEventListener("dblclick", function (e) {
                 window.location.href = link
             })
         }
     }
 }
 
-setTimeout(() => {
-    var parentElement = document.getElementById("topbar")
-    parentElement.insertBefore(headerElement, parentElement.childNodes[1])
-}, 1000)
 
 var headerElement = createElementFromHTML(`<div class="flex items-stretch" style="
                         color: #59b6ff;
