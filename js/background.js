@@ -131,9 +131,6 @@ function insertMentionsList() {
             if (!document.getElementById("body").value.includes("@" + e.target.id)) {
                 document.getElementById("body").value += "@" + e.target.id + " ";
                 e.target.classList.add("included")
-            } else {
-                document.getElementById("body").value = document.getElementById("body").value.replace("@" + e.target.id + " ", "").replace("@" + e.target.id, "")
-                e.target.classList.remove("included")
             }
         })
     })
