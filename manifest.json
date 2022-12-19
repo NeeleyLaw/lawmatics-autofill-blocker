@@ -1,13 +1,13 @@
 {
   "name": "Lawmatics Autofill Blocker",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "manifest_version": 3,
-  "description": "Disable lawmatics contact autofill",
+  "description": "Various Lawmatics Tools custom for NeeleyLaw",
   "update_url": "https://raw.githubusercontent.com/aneeley05/lawmatics-autofill-blocker/master/updates.xml",
   "icons": {
-    "16": "icons/icon16.png",
-    "48": "icons/icon48.png",
-    "128": "icons/icon128.png"
+    "16": "images/logo.png",
+    "48": "images/logo.png",
+    "128": "images/logo.png"
   },
   "default_locale": "en",
   "content_scripts": [
@@ -16,13 +16,19 @@
         "https://*.lawmatics.com/*"
       ],
       "run_at": "document_end",
-      "js": ["js/inject.js"]
+      "js": [
+        "js/inject.js"
+      ]
     }
   ],
   "web_accessible_resources": [
     {
-      "resources": ["js/background.js"],
-      "matches": ["https://*/*"]
+      "resources": [
+        "js/background.js"
+      ],
+      "matches": [
+        "https://*/*"
+      ]
     }
   ],
   "permissions": [
