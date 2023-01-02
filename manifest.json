@@ -1,6 +1,6 @@
 {
   "name": "Lawmatics Autofill Blocker",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "manifest_version": 3,
   "description": "Various Lawmatics Tools custom for NeeleyLaw",
   "update_url": "https://raw.githubusercontent.com/aneeley05/lawmatics-autofill-blocker/master/updates.xml",

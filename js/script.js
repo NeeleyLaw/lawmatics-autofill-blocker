@@ -39,8 +39,16 @@ document.addEventListener("click", (e) => {
 })
 
 setTimeout(() => {
-    var parentElement = document.getElementById("topbar")
-    parentElement.insertBefore(headerElement, parentElement.childNodes[1])
+    //var parentElement = document.getElementById("topbar")
+    //parentElement.insertBefore(headerElement, parentElement.childNodes[1])
+
+    var mainIconCopy = document.getElementById("nav-logo").cloneNode(true)
+    mainIconCopy.id = "nav-logo-copy"
+    mainIconCopy.querySelector("a").href = "/pipeline/5826"
+    // Insert copy before original
+    document.getElementById("nav-logo").insertAdjacentElement("beforebegin", mainIconCopy)
+    // Remove nav-logo
+    document.getElementById("nav-logo").remove()
 
     // if "?del" is in the URL, enable delete buttons
     if (window.location.toString().includes("?del")) {
