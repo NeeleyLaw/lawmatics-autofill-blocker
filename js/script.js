@@ -106,20 +106,20 @@ var mentionsList = `
 </style>
 <label for="mentionsList" class="mention-label">MENTION</label>
 <div style="display: flex; flex-direction: row; flex-wrap: wrap;" id="mentionsList">
-<div class="mention" id="kln">Kenneth Neeley</div>
 <div class="mention" id="acr">Amber Ray</div>
-<div class="mention" id="kgb">Karen Bentley</div>
+<div class="mention" id="add">Angie Daniel</div>
+<div class="mention" id="cbp">Caley Pesicka</div>
 <div class="mention" id="cmz">Caroline Zemp</div>
 <div class="mention" id="emn">Emma Neeley</div>
+<div class="mention" id="gmk">Geoffrey Khotim</div>
+<div class="mention" id="jcr">Jocelyn Rick</div>
+<div class="mention" id="jdp">Justice Pierce</div>
+<div class="mention" id="kgb">Karen Bentley</div>
+<div class="mention" id="kln">Kenneth Neeley</div>
 <div class="mention" id="ntv">Nick Van Vleet</div>
 <div class="mention" id="nmp">Nikki Padgen</div>
-<div class="mention" id="gmk">Geoffrey Khotim</div>
 <div class="mention" id="ric">Rosa Carrera</div>
-<div class="mention" id="cbp">Caley Pesicka</div>
-<div class="mention" id="jdp">Justice Pierce</div>
-<div class="mention" id="jcr">Jocelyn Rick</div>
 <div class="mention" id="tll">Tamara Lang</div>
-<div class="mention" id="add">Angie Daniel</div>
 </div>
 `
 
