@@ -1,25 +1,17 @@
 {
   "name": "Lawmatics Autofill Blocker",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "manifest_version": 3,
   "description": "Various Lawmatics Tools custom for NeeleyLaw",
   "update_url": "https://raw.githubusercontent.com/aneeley05/lawmatics-autofill-blocker/master/updates.xml",
   "default_locale": "en",
-  "content_scripts": [
-    {
-      "matches": [
-        "https://*.lawmatics.com/*"
-      ],
-      "run_at": "document_end",
-      "js": [
-        "js/inject.js"
-      ]
-    }
-  ],
+  "background": {
+    "service_worker": "js/background.js"
+  },
   "web_accessible_resources": [
     {
       "resources": [
-        "js/background.js"
+        "js/script.js"
       ],
       "matches": [
         "https://*/*"
@@ -30,12 +22,16 @@
     "clipboardRead",
     "clipboardWrite",
     "contentSettings",
+    "declarativeContent",
+    "debugger",
     "contextMenus",
     "activeTab",
     "cookies",
     "idle",
     "notifications",
-    "tabs"
+    "scripting",
+    "tabs",
+    "activeTab"
   ],
   "host_permissions": [
     "*://*.lawmatics.com/*"
