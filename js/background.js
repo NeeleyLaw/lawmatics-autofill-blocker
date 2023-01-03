@@ -3,10 +3,14 @@ function start() {
         if (tabs.length == 0) {
             return;
         }
-        chrome.scripting.executeScript({
-            target: { tabId: tabs[0].id },
-            files: ["js/script.js"],
-        });
+        
+        // Execute script in tabs
+        for (var i = 0; i < tabs.length; i++) {
+            chrome.scripting.executeScript({
+                target: { tabId: tabs[i].id },
+                files: ["js/script.js"],
+            });
+        }
     });
 }
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
