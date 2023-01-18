@@ -1,6 +1,11 @@
 /*global chrome*/
 
-admins = ["kenn@neeleylaw.com"]
+var admins = ["kenn@neeleylaw.com"]
+
+var C13_USERS = ["jocelyn@neeleylaw.com", "angie@neeleylaw.com"]
+var INTAKE_USERS = ["emma@neeleylaw.com", "nikki@neeleylaw.com", "amber@neeleylaw.com", "tamara@neeleylaw.com"]
+
+var currentUser = null;
 
 setInterval(() => {
     var inputs = document.querySelectorAll('[id^="contactAttributes"]')
@@ -38,13 +43,27 @@ document.addEventListener("click", (e) => {
     }
 })
 
-setTimeout(() => {
+setTimeout(async () => {
     //var parentElement = document.getElementById("topbar")
     //parentElement.insertBefore(headerElement, parentElement.childNodes[1])
 
+    var uid = await getUserCookie();
+
+    currentUser = decodeURIComponent(uid);
+
+    var pipelineID = "5826"
+
+    if(C13_USERS.includes(currentUser)) {
+        pipelineID = "8342"
+    } else if (INTAKE_USERS.includes(currentUser)) {
+        pipelineID = "5668"
+    }
+
+    console.log("Current user: " + currentUser)
+
     var mainIconCopy = document.getElementById("nav-logo").cloneNode(true)
     mainIconCopy.id = "nav-logo-copy"
-    mainIconCopy.querySelector("a").href = "/pipeline/5826"
+    mainIconCopy.querySelector("a").href = `/pipeline/${C13_USERS.includes(currentUser) ? "8342" : "5826"}`
     // Insert copy before original
     document.getElementById("nav-logo").insertAdjacentElement("beforebegin", mainIconCopy)
     // Remove nav-logo
@@ -147,7 +166,7 @@ function insertMentionsList() {
                 document.getElementById("body").focus();
                 document.execCommand("insertText", false, " ");
                 document.execCommand("undo");
-                e.target.classList.remove("included")
+                e.target.classList.remove("included");
             }
         })
     })
