@@ -140,7 +140,6 @@ var mentionsList = `
 <div class="mention" id="emn">Emma Neeley</div>
 <div class="mention" id="gmk">Geoffrey Khotim</div>
 <div class="mention" id="jjr">Jocelyn Rick</div>
-<div class="mention" id="jdp">Justice Pierce</div>
 <div class="mention" id="kgb">Karen Bentley</div>
 <div class="mention" id="kln">Kenneth Neeley</div>
 <div class="mention" id="ntv">Nick Van Vleet</div>
