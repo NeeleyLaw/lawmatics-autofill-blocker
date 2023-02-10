@@ -32,7 +32,7 @@ document.addEventListener("click", (e) => {
     // Wait for stuff to load in
     setTimeout(() => {
         // if path is /notes or /activities and body exists and mentionsList doesn't exist
-        if ((window.location.pathname.includes("notes") || window.location.pathname.includes("activities")) && document.getElementById("body") && document.getElementById("mentionsList") == null) {
+        if ((window.location.pathname.includes("notes") || window.location.pathname.includes("activities")) && document.querySelector(".ck-editor__editable") && document.getElementById("mentionsList") == null) {
             insertMentionsList();
         }
     }, 50)
@@ -88,8 +88,8 @@ const toggleDeleteEnabled = () => {
 function getFocusedNoteBody() {
     // Check if its a text input
     var focusedElement = document.activeElement;
-    // Check if its id is "body"
-    if (focusedElement.id == "body") {
+    // Check if it has class "ck-editor"
+    if (focusedElement.classList.contains("ck-editor__editable")) {
         return focusedElement;
     }
     return null;
@@ -150,19 +150,20 @@ var mentionsList = `
 `
 
 function insertMentionsList() {
-    var body = document.getElementById("body")
-    body.insertAdjacentHTML("afterend", mentionsList)
+    var body = document.querySelector(".ck-editor__editable")
+    var editor = document.querySelector(".ck-editor")
+    editor.insertAdjacentHTML("afterend", mentionsList)
     document.querySelectorAll(".mention").forEach((mention) => {
         mention.addEventListener("click", (e) => {
-            if (!document.getElementById("body").value.includes("@" + e.target.id)) {
-                document.getElementById("body").value += "@" + e.target.id + " ";
-                document.getElementById("body").focus();
+            if (!body.innerHTML.includes("@" + e.target.id)) {
+                body.innerHTML += '<p style="padding: 0;margin: 0;font-size: 10pt;color: #808080b5;">@' + e.target.id + '</p>';
+                body.focus();
                 document.execCommand("insertText", false, " ");
                 document.execCommand("undo");
                 e.target.classList.add("included")
             } else {
-                document.getElementById("body").value = document.getElementById("body").value.replace("@" + e.target.id + " ", "");
-                document.getElementById("body").focus();
+                body.innerHTML = body.innerHTML.replace('<p style="padding: 0;margin: 0;font-size: 10pt;color: #808080b5;">@' + e.target.id + "</p>", "");
+                body.focus();
                 document.execCommand("insertText", false, " ");
                 document.execCommand("undo");
                 e.target.classList.remove("included");
@@ -225,7 +226,7 @@ function hideAllDeleteButtons() {
 
 // Focus on the textarea and press spacebar
 function focusLock() {
-    document.getElementById("body").focus();
+    document.querySelector(".ck-editor__editable").focus();
     chrome.runtime.sendMessage({ message: "focusLock" }).then(function (response) {
         console.log(response)
     });
