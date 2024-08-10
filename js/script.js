@@ -44,31 +44,6 @@ document.addEventListener("click", (e) => {
 })
 
 setTimeout(async () => {
-    //var parentElement = document.getElementById("topbar")
-    //parentElement.insertBefore(headerElement, parentElement.childNodes[1])
-
-    var uid = await getUserCookie();
-
-    currentUser = decodeURIComponent(uid);
-
-    var pipelineID = "5826"
-
-    if(C13_USERS.includes(currentUser)) {
-        pipelineID = "8342"
-    } else if (INTAKE_USERS.includes(currentUser)) {
-        pipelineID = "5668"
-    }
-
-    console.log("Current user: " + currentUser)
-
-    var mainIconCopy = document.getElementById("nav-logo").cloneNode(true)
-    mainIconCopy.id = "nav-logo-copy"
-    mainIconCopy.querySelector("a").href = `/pipeline/${C13_USERS.includes(currentUser) ? "8342" : "5826"}`
-    // Insert copy before original
-    document.getElementById("nav-logo").insertAdjacentElement("beforebegin", mainIconCopy)
-    // Remove nav-logo
-    document.getElementById("nav-logo").remove()
-
     // if "?del" is in the URL, enable delete buttons
     if (window.location.toString().includes("?del")) {
         deleteEnabled = true
